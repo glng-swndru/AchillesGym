@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('about');
             $table->boolean('is_popular');
             $table->time('open_time_at');
-            $table->time('close_time_at');
+            $table->time('closed_time_at');
             $table->foreignId('city_id')->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();

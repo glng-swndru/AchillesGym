@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
-    //
-
     protected $frontService;
 
     public function __construct(FrontService $frontService)
