@@ -44,7 +44,7 @@ class BookingService {
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'duration' => $duration,
-            'phone' => $validatedData('phone'),
+            'phone' => $validatedData['phone'],
             'started_at' => $startedAt,
             'ended_at' => $endedAt,
             'sub_total' =>$subTotal,
@@ -89,7 +89,7 @@ class BookingService {
             $validated['ended_at'] = $bookingData['ended_at'];
             $validated['is_paid'] = false;
 
-            $validated['bookin_trx_id'] = SubscribeTransaction::generateUniqueTrxId();
+            $validated['booking_trx_id'] = SubscribeTransaction::generateUniqueTrxId();
             $newBooking = $this->bookingRepository->createBooking($validated);
             $bookingTransactionId = $newBooking->id;
         });

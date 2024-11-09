@@ -14,7 +14,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\SelectiFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -196,7 +195,7 @@ class SubscribeTransactionResource extends Resource
                     ->send();
                 })
                 ->color('success')
-                ->requiredConfirmation()
+                ->requiresConfirmation()
                 ->visible(fn (SubscribeTransaction $record) => !$record->is_paid),
             ])
             ->bulkActions([

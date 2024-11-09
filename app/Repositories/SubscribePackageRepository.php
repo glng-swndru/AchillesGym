@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\SubscribePackage;
 use App\Repositories\Contracts\SubscribePackageRepositoryInterface;
+use App\Models\SubscribePackage;
 
 class SubscribePackageRepository implements SubscribePackageRepositoryInterface
 {

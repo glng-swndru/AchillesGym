@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Contracts\CityRepositoryInterface;
 use App\Repositories\Contracts\GymRepositoryInterface;
-use app\Repositories\Contracts\SubscribePackageRepositoryInterface;
+use App\Repositories\Contracts\SubscribePackageRepositoryInterface;
 
 class FrontService
 {

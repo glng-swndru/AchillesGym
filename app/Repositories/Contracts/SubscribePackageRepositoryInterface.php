@@ -2,8 +2,7 @@
 
 namespace App\Repositories\Contracts;
 
-interface SubscribePackageRepositoryInterface
-{
+interface SubscribePackageRepositoryInterface {
     public function getAllSubscribePackages();
 
     public function find($id);
