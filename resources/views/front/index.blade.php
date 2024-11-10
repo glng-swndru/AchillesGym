@@ -3,28 +3,7 @@
 @section('content')
 <header class="relative flex flex-col w-full h-[1044px] overflow-hidden -mb-[140px]">
     <img src="{{asset('assets/images/backgrounds/Header Illustration.svg')}}" class="absolute w-full h-full object-cover" alt="backgrounds">
-    <nav class="relative flex items-center justify-between w-full max-w-[1280px] mx-auto px-10 mt-10">
-        <a href="index.html">
-            <img src="{{asset('assets/images/logos/Logo.svg')}}" class="flex shrink-0" alt="logo">
-        </a>
-        <ul class="flex items-center gap-6 justify-end">
-            <li>
-                <a href="#" class="leading-19 tracking-03 text-[#141414]">Subscribe Plan</a>
-            </li>
-            <li>
-                <a href="#" class="leading-19 tracking-03 text-[#141414]">Blog</a>
-            </li>
-            <li>
-                <a href="#" class="leading-19 tracking-03 text-[#141414]">Testimonial</a>
-            </li>
-            <li>
-                <a href="#" class="leading-19 tracking-03 text-[#141414]">About</a>
-            </li>
-            <li>
-                <a href="#" class="leading-19 tracking-0.5 text-white font-semibold rounded-[22px] py-3 px-6 bg-[#606DE5]">My Subscription</a>
-            </li>
-        </ul>
-    </nav>
+    <x-nav/>
     <div id="hero-text" class="relative flex flex-col items-center mx-auto mt-[96px]">
         <div class="flex items-center w-fit rounded-[38px] p-2 pr-6 gap-3 bg-fitcamp-black">
             <img src="{{asset('assets/images/photos/triple-photo.png')}}" class="flex shrink-0 w-[88px] h-10" alt="photos">
@@ -71,62 +50,20 @@
         </div>
     </div>
     <div class="flex items-center gap-4 flex-wrap">
-        <a href="location-result.html">
+
+        @forelse ($cities as $itemCity)
+        <a href="{{route('front.city', $itemCity->slug)}}">
             <div class="flex items-center rounded-full p-3 pr-6 gap-3 bg-white">
                 <div class="w-10 h-10 flex shrink-0 rounded-full overflow-hidden">
-                    <img src="{{asset('assets/images/icons/jakarta.png')}}" class="w-full h-full object-cover" alt="icon">
+                    <img src="{{Storage::url($itemCity->photo)}}" class="w-full h-full object-cover" alt="icon">
                 </div>
-                <span class="leading-19 tracking-03">Jakarta</span>
+                <span class="leading-19 tracking-03">{{$itemCity->name}}</span>
             </div>
         </a>
-        <a href="location-result.html">
-            <div class="flex items-center rounded-full p-3 pr-6 gap-3 bg-white">
-                <div class="w-10 h-10 flex shrink-0 rounded-full overflow-hidden">
-                    <img src="{{asset('assets/images/icons/bandung.png')}}" class="w-full h-full object-cover" alt="icon">
-                </div>
-                <span class="leading-19 tracking-03">Bandung</span>
-            </div>
-        </a>
-        <a href="location-result.html">
-            <div class="flex items-center rounded-full p-3 pr-6 gap-3 bg-white">
-                <div class="w-10 h-10 flex shrink-0 rounded-full overflow-hidden">
-                    <img src="{{asset('assets/images/icons/surabaya.png')}}" class="w-full h-full object-cover" alt="icon">
-                </div>
-                <span class="leading-19 tracking-03">Surabaya</span>
-            </div>
-        </a>
-        <a href="location-result.html">
-            <div class="flex items-center rounded-full p-3 pr-6 gap-3 bg-white">
-                <div class="w-10 h-10 flex shrink-0 rounded-full overflow-hidden">
-                    <img src="{{asset('assets/images/icons/bogor.png')}}" class="w-full h-full object-cover" alt="icon">
-                </div>
-                <span class="leading-19 tracking-03">Bogor</span>
-            </div>
-        </a>
-        <a href="location-result.html">
-            <div class="flex items-center rounded-full p-3 pr-6 gap-3 bg-white">
-                <div class="w-10 h-10 flex shrink-0 rounded-full overflow-hidden">
-                    <img src="{{asset('assets/images/icons/padang.png')}}" class="w-full h-full object-cover" alt="icon">
-                </div>
-                <span class="leading-19 tracking-03">Padang</span>
-            </div>
-        </a>
-        <a href="location-result.html">
-            <div class="flex items-center rounded-full p-3 pr-6 gap-3 bg-white">
-                <div class="w-10 h-10 flex shrink-0 rounded-full overflow-hidden">
-                    <img src="{{asset('assets/images/icons/jogja.png')}}" class="w-full h-full object-cover" alt="icon">
-                </div>
-                <span class="leading-19 tracking-03">Yogyakarta</span>
-            </div>
-        </a>
-        <a href="location-result.html">
-            <div class="flex items-center rounded-full p-3 pr-6 gap-3 bg-white">
-                <div class="w-10 h-10 flex shrink-0 rounded-full overflow-hidden">
-                    <img src="{{asset('assets/images/icons/denpasar.png')}}" class="w-full h-full object-cover" alt="icon">
-                </div>
-                <span class="leading-19 tracking-03">Denpasar</span>
-            </div>
-        </a>
+        @empty
+            <p>belum ada data terbaru</p>
+        @endforelse
+
     </div>
 </section>
 <section id="latest" class="flex flex-col w-full max-w-[1280px] gap-8 mx-auto px-10 mt-[120px]">
@@ -140,300 +77,62 @@
         </a>
     </div>
     <div class="grid grid-cols-3 gap-6">
-        <a href="details.html" class="card">
+
+        @forelse ($newGyms as $itemNewGym)
+        <a href="{{route('front.details', $itemNewGym->slug)}}" class="card">
             <div class="flex flex-col rounded-3xl p-8 gap-6 bg-white">
                 <div class="title flex flex-col gap-2">
-                    <h3 class="font-['ClashDisplay-SemiBold'] leading-19 tracking-05">Fitcamp Senayan City Victory</h3>
+                    <h3 class="font-['ClashDisplay-SemiBold'] leading-19 tracking-05">
+                        {{$itemNewGym->name}}
+                    </h3>
                     <div class="flex items-center gap-1">
                         <img src="{{asset('assets/images/icons/location.svg')}}" class="flex shrink-0" alt="icon">
-                        <p class="text-sm leading-19 tracking-03 opacity-50">Senayan, Jakarta Selatan</p>
+                        <p class="text-sm leading-19 tracking-03 opacity-50">
+                            {{$itemNewGym->city->name}}
+                        </p>
                     </div>
                 </div>
                 <div class="thumbnail flex rounded-3xl h-[200px] bg-[#06425E] overflow-hidden">
-                    <img src="{{asset('assets/images/thumbnails/th1.png')}}" class="w-full h-full object-cover" alt="thumbnail">
+                    <img src="{{Storage::url($itemNewGym->thumbnail)}}" class="w-full h-full object-cover" alt="thumbnail">
                 </div>
                 <div class="flex items-center justify-between">
                     <p class="font-['ClashDisplay-SemiBold']">Facilities</p>
                     <button class="font-semibold text-xs leading-14 tracking-05 text-fitcamp-royal-blue">View all</button>
                 </div>
                 <div class="grid grid-cols-3 justify-between gap-3">
+                    @forelse ($itemNewGym->gymFacilities->take(3) as $itemFacility)
                     <div class="flex flex-col gap-3 items-center text-center">
                         <img src="{{asset('assets/images/icons/Sauna.svg')}}" class="w-10 h-10" alt="icon">
                         <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Sauna</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Relax Body</p>
+                            <p class="font-semibold text-sm leading-16 tracking-05">
+                                {{$itemFacility->facility->name}}
+                            </p>
+                            <p class="opacity-50 text-sm leading-16 tracking-05">
+                                {{$itemFacility->facility->about}}
+                            </p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Shower Room.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Shower</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">After Gym</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Locker.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Locker</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Saving Bag</p>
-                        </div>
-                    </div>
+                    @empty
+                    <p>belum ada data fasilitas</p>
+                    @endforelse
+
                 </div>
                 <hr class="border-black/10">
                 <div class="flex items-center gap-3">
                     <img src="{{asset('assets/images/icons/Daily Time.svg')}}" class="w-10 h-10" alt="icon">
                     <div class="flex flex-col gap-2">
                         <p class="font-['ClashDisplay-SemiBold'] text-sm leading-17 tracking-05">Opening Work</p>
-                        <p class="text-xs leading-14 tracking-05 opacity-50">08:00 AM - 09:00 PM</p>
+                        <p class="text-xs leading-14 tracking-05 opacity-50">
+                            {{$itemNewGym->open_time_at->format('h:i A')}} - {{$itemNewGym->closed_time_at->format('h:i A')}}
+                        </p>
                     </div>
                 </div>
             </div>
         </a>
-        <a href="details.html" class="card">
-            <div class="flex flex-col rounded-3xl p-8 gap-6 bg-white">
-                <div class="title flex flex-col gap-2">
-                    <h3 class="font-['ClashDisplay-SemiBold'] leading-19 tracking-05">FItcamp Blok A Jaya</h3>
-                    <div class="flex items-center gap-1">
-                        <img src="{{asset('assets/images/icons/location.svg')}}" class="flex shrink-0" alt="icon">
-                        <p class="text-sm leading-19 tracking-03 opacity-50">Senayan, Jakarta Selatan</p>
-                    </div>
-                </div>
-                <div class="thumbnail flex rounded-3xl h-[200px] bg-[#06425E] overflow-hidden">
-                    <img src="{{asset('assets/images/thumbnails/th2.png')}}" class="w-full h-full object-cover" alt="thumbnail">
-                </div>
-                <div class="flex items-center justify-between">
-                    <p class="font-['ClashDisplay-SemiBold']">Facilities</p>
-                    <button class="font-semibold text-xs leading-14 tracking-05 text-fitcamp-royal-blue">View all</button>
-                </div>
-                <div class="grid grid-cols-3 justify-between gap-3">
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Sauna.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Sauna</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Relax Body</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Shower Room.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Shower</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">After Gym</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Locker.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Locker</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Saving Bag</p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-black/10">
-                <div class="flex items-center gap-3">
-                    <img src="{{asset('assets/images/icons/Daily Time.svg')}}" class="w-10 h-10" alt="icon">
-                    <div class="flex flex-col gap-2">
-                        <p class="font-['ClashDisplay-SemiBold'] text-sm leading-17 tracking-05">Opening Work</p>
-                        <p class="text-xs leading-14 tracking-05 opacity-50">08:00 AM - 09:00 PM</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="details.html" class="card">
-            <div class="flex flex-col rounded-3xl p-8 gap-6 bg-white">
-                <div class="title flex flex-col gap-2">
-                    <h3 class="font-['ClashDisplay-SemiBold'] leading-19 tracking-05">Fitcamp Cipete Raya</h3>
-                    <div class="flex items-center gap-1">
-                        <img src="{{asset('assets/images/icons/location.svg')}}" class="flex shrink-0" alt="icon">
-                        <p class="text-sm leading-19 tracking-03 opacity-50">Senayan, Jakarta Selatan</p>
-                    </div>
-                </div>
-                <div class="thumbnail flex rounded-3xl h-[200px] bg-[#06425E] overflow-hidden">
-                    <img src="{{asset('assets/images/thumbnails/th3.png')}}" class="w-full h-full object-cover" alt="thumbnail">
-                </div>
-                <div class="flex items-center justify-between">
-                    <p class="font-['ClashDisplay-SemiBold']">Facilities</p>
-                    <button class="font-semibold text-xs leading-14 tracking-05 text-fitcamp-royal-blue">View all</button>
-                </div>
-                <div class="grid grid-cols-3 justify-between gap-3">
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Sauna.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Sauna</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Relax Body</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Shower Room.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Shower</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">After Gym</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Locker.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Locker</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Saving Bag</p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-black/10">
-                <div class="flex items-center gap-3">
-                    <img src="{{asset('assets/images/icons/Daily Time.svg')}}" class="w-10 h-10" alt="icon">
-                    <div class="flex flex-col gap-2">
-                        <p class="font-['ClashDisplay-SemiBold'] text-sm leading-17 tracking-05">Opening Work</p>
-                        <p class="text-xs leading-14 tracking-05 opacity-50">08:00 AM - 09:00 PM</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="details.html" class="card">
-            <div class="flex flex-col rounded-3xl p-8 gap-6 bg-white">
-                <div class="title flex flex-col gap-2">
-                    <h3 class="font-['ClashDisplay-SemiBold'] leading-19 tracking-05">Fitcamp Senayan City Victory</h3>
-                    <div class="flex items-center gap-1">
-                        <img src="{{asset('assets/images/icons/location.svg')}}" class="flex shrink-0" alt="icon">
-                        <p class="text-sm leading-19 tracking-03 opacity-50">Senayan, Jakarta Selatan</p>
-                    </div>
-                </div>
-                <div class="thumbnail flex rounded-3xl h-[200px] bg-[#06425E] overflow-hidden">
-                    <img src="{{asset('assets/images/thumbnails/th4.png')}}" class="w-full h-full object-cover" alt="thumbnail">
-                </div>
-                <div class="flex items-center justify-between">
-                    <p class="font-['ClashDisplay-SemiBold']">Facilities</p>
-                    <button class="font-semibold text-xs leading-14 tracking-05 text-fitcamp-royal-blue">View all</button>
-                </div>
-                <div class="grid grid-cols-3 justify-between gap-3">
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Sauna.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Sauna</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Relax Body</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Shower Room.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Shower</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">After Gym</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Locker.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Locker</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Saving Bag</p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-black/10">
-                <div class="flex items-center gap-3">
-                    <img src="{{asset('assets/images/icons/Daily Time.svg')}}" class="w-10 h-10" alt="icon">
-                    <div class="flex flex-col gap-2">
-                        <p class="font-['ClashDisplay-SemiBold'] text-sm leading-17 tracking-05">Opening Work</p>
-                        <p class="text-xs leading-14 tracking-05 opacity-50">08:00 AM - 09:00 PM</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="details.html" class="card">
-            <div class="flex flex-col rounded-3xl p-8 gap-6 bg-white">
-                <div class="title flex flex-col gap-2">
-                    <h3 class="font-['ClashDisplay-SemiBold'] leading-19 tracking-05">Fitcamp Senayan City Victory</h3>
-                    <div class="flex items-center gap-1">
-                        <img src="{{asset('assets/images/icons/location.svg')}}" class="flex shrink-0" alt="icon">
-                        <p class="text-sm leading-19 tracking-03 opacity-50">Senayan, Jakarta Selatan</p>
-                    </div>
-                </div>
-                <div class="thumbnail flex rounded-3xl h-[200px] bg-[#06425E] overflow-hidden">
-                    <img src="{{asset('assets/images/thumbnails/th5.png')}}" class="w-full h-full object-cover" alt="thumbnail">
-                </div>
-                <div class="flex items-center justify-between">
-                    <p class="font-['ClashDisplay-SemiBold']">Facilities</p>
-                    <button class="font-semibold text-xs leading-14 tracking-05 text-fitcamp-royal-blue">View all</button>
-                </div>
-                <div class="grid grid-cols-3 justify-between gap-3">
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Sauna.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Sauna</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Relax Body</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Shower Room.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Shower</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">After Gym</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Locker.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Locker</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Saving Bag</p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-black/10">
-                <div class="flex items-center gap-3">
-                    <img src="{{asset('assets/images/icons/Daily Time.svg')}}" class="w-10 h-10" alt="icon">
-                    <div class="flex flex-col gap-2">
-                        <p class="font-['ClashDisplay-SemiBold'] text-sm leading-17 tracking-05">Opening Work</p>
-                        <p class="text-xs leading-14 tracking-05 opacity-50">08:00 AM - 09:00 PM</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="details.html" class="card">
-            <div class="flex flex-col rounded-3xl p-8 gap-6 bg-white">
-                <div class="title flex flex-col gap-2">
-                    <h3 class="font-['ClashDisplay-SemiBold'] leading-19 tracking-05">Fitcamp Senayan City Victory</h3>
-                    <div class="flex items-center gap-1">
-                        <img src="{{asset('assets/images/icons/location.svg')}}" class="flex shrink-0" alt="icon">
-                        <p class="text-sm leading-19 tracking-03 opacity-50">Senayan, Jakarta Selatan</p>
-                    </div>
-                </div>
-                <div class="thumbnail flex rounded-3xl h-[200px] bg-[#06425E] overflow-hidden">
-                    <img src="{{asset('assets/images/thumbnails/th6.png')}}" class="w-full h-full object-cover" alt="thumbnail">
-                </div>
-                <div class="flex items-center justify-between">
-                    <p class="font-['ClashDisplay-SemiBold']">Facilities</p>
-                    <button class="font-semibold text-xs leading-14 tracking-05 text-fitcamp-royal-blue">View all</button>
-                </div>
-                <div class="grid grid-cols-3 justify-between gap-3">
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Sauna.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Sauna</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Relax Body</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Shower Room.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Shower</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">After Gym</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center text-center">
-                        <img src="{{asset('assets/images/icons/Locker.svg')}}" class="w-10 h-10" alt="icon">
-                        <div class="flex flex-col gap-1">
-                            <p class="font-semibold text-sm leading-16 tracking-05">Locker</p>
-                            <p class="opacity-50 text-sm leading-16 tracking-05">Saving Bag</p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-black/10">
-                <div class="flex items-center gap-3">
-                    <img src="{{asset('assets/images/icons/Daily Time.svg')}}" class="w-10 h-10" alt="icon">
-                    <div class="flex flex-col gap-2">
-                        <p class="font-['ClashDisplay-SemiBold'] text-sm leading-17 tracking-05">Opening Work</p>
-                        <p class="text-xs leading-14 tracking-05 opacity-50">08:00 AM - 09:00 PM</p>
-                    </div>
-                </div>
-            </div>
-        </a>
+        @empty
+            <p>belum ada data terbaru</p>
+        @endforelse
+
     </div>
 </section>
 <section id="testi" class="flex flex-col gap-8 mt-[120px]">

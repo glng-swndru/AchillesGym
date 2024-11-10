@@ -25,6 +25,11 @@ class Gym extends Model
         'address',
     ];
 
+    protected $casts = [
+        'open_time_at' => 'datetime:H:i',
+        'closed_time_at' => 'datetime:H:i',
+    ];
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;
